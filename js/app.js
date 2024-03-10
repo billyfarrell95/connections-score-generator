@@ -1,7 +1,10 @@
 const form = document.getElementById('form');
 const input = document.getElementById('results-input');
+const errorMessageWrapper = document.getElementById('error-msg-wrapper');
+const errorMessage = 'Invalid input. Please enter valid Connections results.'
+const scoreWrapper = document.getElementById('score-wrapper');
+const scoreDisplay = document.getElementById('score-display');
 
-/* @todo: reset after form submission */
 let score = 0
 
 /* Templates to compare against user input and reference score values from */
@@ -32,14 +35,35 @@ const lineMultipliers = {
     line4: 1
 }
 
-/* @todo: validate user input to handle cases when input doesn't match expected value, e.g. with emojis */
 /* On form submit process user input */
 form.addEventListener('submit', (e)=> {
     e.preventDefault();
+    /* Reset score */
+    score = 0;
     if (input.value.trim() !== "") {
         processUserInput(input.value);
-    }    
+    } else if (input.value.trim() == "") {
+        const messageEl = createDOMElement('p', 'error-message', errorMessage);
+        scoreWrapper.classList.add('d-none');
+        if (errorMessageWrapper.textContent == '') {
+            errorMessageWrapper.append(messageEl);
+        }
+        form.reset();
+        input.focus();
+    }
 })
+
+function createDOMElement(tagName, classes, textContent) {
+    const element = document.createElement(tagName);
+    if (textContent !== undefined) {
+        element.textContent = textContent;
+    }
+    if (classes !== undefined) {
+        element.className = classes;
+    }
+    return element;
+}
+
 
 /* Filter out non-emoji characters and create array based on user input */
 function processUserInput(inputValue) {
@@ -47,17 +71,33 @@ function processUserInput(inputValue) {
     const emojis = inputValue.match(emojiRegex);
     const chunkSize = 4;
     const emojisArray = []
-    for (let i = 0; i < emojis.length; i += chunkSize) {
-        const chunk = emojis.slice(i, i + chunkSize)
-        emojisArray.push(chunk)
+    if (emojis) {
+        for (let i = 0; i < emojis.length; i += chunkSize) {
+            const chunk = emojis.slice(i, i + chunkSize)
+            emojisArray.push(chunk)
+        }
     }
 
     /* Call calculateScore 4 times, passing the first 4 items in emojisArray. In this scoring system, lines past 4 have a multiplier of 0, so we don't need to reference that data. */
-    for (let i = 0; i < 4; i++) {
-        console.log(emojisArray[i].join(''), i)
-        calculateScore(emojisArray[i].join(''), i)
+    if (emojisArray.length >= 4) {
+        errorMessageWrapper.textContent = '';
+        for (let i = 0; i < 4; i++) {
+            calculateScore(emojisArray[i].join(''), i)
+        }
+    } else {
+        const messageEl = createDOMElement('p', 'error-message', errorMessage);
+        form.reset();
+        input.focus()
+        if (errorMessageWrapper.textContent == '') {
+            errorMessageWrapper.append(messageEl);
+            scoreWrapper.classList.add('d-none');
+        }
+        return;
     }
-    console.log('SCORE', score)
+
+    /* Display the score after Calculating */
+    scoreWrapper.classList.remove('d-none');
+    scoreDisplay.textContent = score;
 }
 
 /* Generate score by comparing input values against the template values as well as which line the value is on */
@@ -81,8 +121,7 @@ function calculateScore(lineValue, lineNumber) {
         case template.orange.emoji:
             lineScore = calculateLineScore('orange', lineNumber);
             score += lineScore
-        default:
-            console.log('none')
+            break
     }
 }
 
