@@ -34,8 +34,7 @@ form.addEventListener('submit', (e)=> {
     processUserInput(input.value);
 })
 
-function processUserInput(value) {
-    const inputValue = input.value;
+function processUserInput(inputValue) {
     const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
     const emojis = inputValue.match(emojiRegex);
     const chunkSize = 4;
@@ -51,73 +50,39 @@ function processUserInput(value) {
     console.log('SCORE', score)
 }
 
-function generateScore(row, rowNum) {
-    switch (row) {
-        case template.purple.emoji:
-            switch(rowNum) {
-                case 0:
-                    score += (template.purple.points * lineMultipliers.line1)
-                    break
-                case 1:
-                    score += (template.purple.points * lineMultipliers.line2)
-                    break
-                case 2:
-                    score += (template.purple.points * lineMultipliers.line3)
-                    break
-                case 3:
-                    score += (template.purple.points * lineMultipliers.line4)
-                    break
-            }
+function generateScore(lineValue, lineNumber) {
+    let lineScore;
+    switch (lineValue) {
+        case template.purple.emoji: 
+            lineScore = calculateLineScore('purple', lineNumber)
+            score += lineScore
             break;
         case template.blue.emoji:
-            switch(rowNum) {
-                case 0:
-                    score += (template.blue.points * lineMultipliers.line1)
-                    break
-                case 1:
-                    score += (template.blue.points * lineMultipliers.line2)
-                    break
-                case 2:
-                    score += (template.blue.points * lineMultipliers.line3)
-                    break
-                case 3:
-                    score += (template.blue.points * lineMultipliers.line4)
-                    break
-            }
+            lineScore = calculateLineScore('blue', lineNumber)
+            score += lineScore
             break;
         case template.green.emoji:
-            switch(rowNum) {
-                case 0:
-                    score += (template.green.points * lineMultipliers.line1)
-                    break
-                case 1:
-                    score += (template.green.points * lineMultipliers.line2)
-                    break
-                case 2:
-                    score += (template.green.points * lineMultipliers.line3)
-                    break
-                case 3:
-                    score += (template.green.points * lineMultipliers.line4)
-                    break
-            }
+            lineScore = calculateLineScore('green', lineNumber)
+            score += lineScore
             break;
         case template.orange.emoji:
-            switch(rowNum) {
-                case 0:
-                    score += (template.orange.points * lineMultipliers.line1)
-                    break
-                case 1:
-                    score += (template.orange.points * lineMultipliers.line2)
-                    break
-                case 2:
-                    score += (template.orange.points * lineMultipliers.line3)
-                    break
-                case 3:
-                    score += (template.orange.points * lineMultipliers.line4)
-                    break
-            }
-            break;
+            lineScore = calculateLineScore('orange', lineNumber);
+            score += lineScore
         default:
             console.log('none')
+    }
+}
+
+function calculateLineScore(lineColor, lineNumber) {
+    colorTemplate = template[lineColor]
+    switch(lineNumber) {
+        case 0:
+            return (colorTemplate.points * lineMultipliers.line1)
+        case 1:
+            return (colorTemplate.points * lineMultipliers.line2)
+        case 2:
+            return (colorTemplate.points * lineMultipliers.line3)
+        case 3:
+            return (colorTemplate.points * lineMultipliers.line4)
     }
 }
