@@ -1,7 +1,7 @@
 const form = document.getElementById('form');
 const input = document.getElementById('results-input');
 const errorMessageWrapper = document.getElementById('error-msg-wrapper');
-const errorMessage = 'Invalid input. Please enter valid Connections results.'
+const errorMessage = 'Invalid input. Please enter valid Connections Game results.'
 const scoreWrapper = document.getElementById('score-wrapper');
 const scoreDisplay = document.getElementById('score-display');
 
