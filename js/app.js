@@ -1,5 +1,5 @@
 const form = document.getElementById('form');
-const input = document.getElementById('input');
+const input = document.getElementById('results-input');
 
 /* @todo: reset after form submission */
 let score = 0

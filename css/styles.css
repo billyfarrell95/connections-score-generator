@@ -1,0 +1,135 @@
+:root {
+    --blue: #0A2463;
+    --offwhite: #FFFAFF;
+}
+body {
+    background-color: var(--offwhite);
+    font-family: "Open Sans", sans-serif;
+}
+
+/* Reset */
+input[type=submit] {
+    cursor: pointer;
+}
+/* Typography */
+
+h1 {
+    color: var(--blue);
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: .4em;
+    line-height: 1.25;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* Layout */
+section {
+    padding-block: 2rem;
+}
+
+.container {
+    max-width: 1200px;
+    padding-inline: 1rem;
+    margin-inline: auto;
+}
+
+/* Buttons */
+button {
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--blue);
+    color: var(--offwhite);
+    padding: .4rem .8rem .4rem .8rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 2px solid var(--blue);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--offwhite);
+    color: var(--blue)
+}
+
+/* Forms */
+::placeholder {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    line-height: 1.25em;
+}
+
+label {
+    line-height: 1.5em;
+    font-weight: bold;
+}
+
+textarea {
+    padding: .4rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.input-wrapper {
+    padding-bottom: .6rem;
+}
+
+/* Accordion */
+.accordion-wrapper {
+    padding: .5rem;
+}
+
+.accordion-wrapper p:nth-of-type(1) {
+    margin-top: 0;
+}
+
+.accordion-title {
+    border: 1px solid var(--blue);
+    font-weight: bold;
+    font-size: 1.2rem;
+    
+}
+
+.accordion-title.open {
+    border-bottom: none;
+}
+
+.accordion-title button {
+    display: flex;
+    width: 100%;
+    padding: .5rem;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.accordion-title button svg {
+    height: 16px;
+    width: 16px;
+}
+
+.accordion-title.open button svg {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    padding: .5rem;
+}
+
+.accordion-content.open {
+    border-inline: 1px solid var(--blue);
+    border-bottom: 1px solid var(--blue);
+}
+
+/* Utilities */
+.d-none {
+    display: none;
+}
