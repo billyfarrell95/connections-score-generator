@@ -3,6 +3,7 @@ const input = document.getElementById('input');
 
 let score = 0
 
+/* Templates to compare against user input and reference score values from */
 const template = {
     purple:  {
         emoji: '🟪🟪🟪🟪',
@@ -22,6 +23,7 @@ const template = {
     }
 }
 
+/* Multipliers used to calculate score of each line */
 const lineMultipliers = {
     line1: 4,
     line2: 3,
@@ -29,11 +31,13 @@ const lineMultipliers = {
     line4: 1
 }
 
+/* On form submit process user input */
 form.addEventListener('submit', (e)=> {
     e.preventDefault();
     processUserInput(input.value);
 })
 
+/* Filter out non-emoji characters and create array based on user input */
 function processUserInput(inputValue) {
     const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
     const emojis = inputValue.match(emojiRegex);
@@ -44,14 +48,19 @@ function processUserInput(inputValue) {
         emojisArray.push(chunk)
     }
 
+    /* Call generateScore 4 times, passing the first 4 items in emojisArray. In this scoring system, lines past 4 have a multiplier of 0, so we don't need to reference that data. */
     for (let i = 0; i < 4; i++) {
+        console.log(emojisArray[i].join(''), i)
         generateScore(emojisArray[i].join(''), i)
     }
     console.log('SCORE', score)
 }
 
+/* Generate score by comparing input values against the template values as well as which line the value is on */
+/* E.g. If the "purple category was solved on line 2, calculateLineScore() would return: 4 * 3 (points * line three multiplier) */
 function generateScore(lineValue, lineNumber) {
     let lineScore;
+    /* Call calculateLineScore and save the returned value based on if the input value matches a case in the template */
     switch (lineValue) {
         case template.purple.emoji: 
             lineScore = calculateLineScore('purple', lineNumber)
@@ -73,6 +82,7 @@ function generateScore(lineValue, lineNumber) {
     }
 }
 
+/* Return the calculated line score for each line. Returns the points value of the color multiplied by the line multiplier (based on lineNumber from generateScore) */
 function calculateLineScore(lineColor, lineNumber) {
     colorTemplate = template[lineColor]
     switch(lineNumber) {
