@@ -1,10 +1,11 @@
 const form = document.getElementById('form');
-const input = document.getElementById('results-input');
+const resultsInput = document.getElementById('results-input');
 const errorMessageWrapper = document.getElementById('error-msg-wrapper');
 const errorMessage = 'Invalid input. Please enter valid Connections Game results.'
 const scoreWrapper = document.getElementById('score-wrapper');
 const scoreDisplay = document.getElementById('score-display');
 
+/* Default score */
 let score = 0
 
 /* Templates to compare against user input and reference score values from */
@@ -40,19 +41,30 @@ form.addEventListener('submit', (e)=> {
     e.preventDefault();
     /* Reset score */
     score = 0;
-    if (input.value.trim() !== "") {
-        processUserInput(input.value);
-    } else if (input.value.trim() == "") {
-        const messageEl = createDOMElement('p', 'error-message', errorMessage);
-        scoreWrapper.classList.add('d-none');
-        if (errorMessageWrapper.textContent == '') {
-            errorMessageWrapper.append(messageEl);
-        }
+    if (!resultsInput.value.trim()) {
+        displayErrorMessage(errorMessage);
         form.reset();
         input.focus();
+    } else {
+        processUserInput(resultsInput.value);
     }
 })
 
+resultsInput.addEventListener('focus', ()=> {
+    if (resultsInput.value.trim()) {
+        resultsInput.select();
+    }
+})
+
+/* Create and append error message to DOM */
+function displayErrorMessage(message) {
+    errorMessageWrapper.textContent = '';
+    const messageEl = createDOMElement('p', 'error-message', message);
+    errorMessageWrapper.append(messageEl);
+    scoreWrapper.classList.add('d-none');
+}
+
+/* Create and return an HTML element */
 function createDOMElement(tagName, classes, textContent) {
     const element = document.createElement(tagName);
     if (textContent !== undefined) {
@@ -63,7 +75,6 @@ function createDOMElement(tagName, classes, textContent) {
     }
     return element;
 }
-
 
 /* Filter out non-emoji characters and create array based on user input */
 function processUserInput(inputValue) {
@@ -85,23 +96,23 @@ function processUserInput(inputValue) {
             calculateScore(emojisArray[i].join(''), i)
         }
     } else {
-        const messageEl = createDOMElement('p', 'error-message', errorMessage);
+        displayErrorMessage(errorMessage)
         form.reset();
-        input.focus()
-        if (errorMessageWrapper.textContent == '') {
-            errorMessageWrapper.append(messageEl);
-            scoreWrapper.classList.add('d-none');
-        }
+        resultsInput.focus()
         return;
     }
 
     /* Display the score after Calculating */
-    scoreWrapper.classList.remove('d-none');
-    scoreDisplay.textContent = score;
+    displayScore(score);
 }
 
-/* Generate score by comparing input values against the template values as well as which line the value is on */
-/* E.g. If the "purple category was solved on line 2, calculateLineScore() would return: 4 * 3 (points * line three multiplier) */
+/* Display the score */
+function displayScore(scoreValue) {
+    scoreWrapper.classList.remove('d-none');
+    scoreDisplay.textContent = scoreValue;
+}
+
+/* Generate score by comparing input values against the template values as well as line multiplier */
 function calculateScore(lineValue, lineNumber) {
     let lineScore;
     /* Call calculateLineScore and save the returned value based on if the input value matches a case in the template */
@@ -127,7 +138,7 @@ function calculateScore(lineValue, lineNumber) {
 
 /* Return the calculated line score for each line. Returns the points value of the color multiplied by the line multiplier (based on lineNumber from calculateScore) */
 function calculateLineScore(lineColor, lineNumber) {
-    colorTemplate = template[lineColor]
+    const colorTemplate = template[lineColor]
     switch(lineNumber) {
         case 0:
             return (colorTemplate.points * lineMultipliers.line1)
