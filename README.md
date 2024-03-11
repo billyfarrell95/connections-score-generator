@@ -1,4 +1,4 @@
-# Score Generator Readme
+# Score Generator
 
 ## How this score generator works
 
