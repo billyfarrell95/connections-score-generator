@@ -1,12 +1,21 @@
 const form = document.getElementById('form');
 const resultsInput = document.getElementById('results-input');
 const errorMessageWrapper = document.getElementById('error-msg-wrapper');
-const errorMessage = 'Invalid input. Please enter valid Connections Game results.'
+const errorMessage = "Invalid input. Please enter valid Connections Game results. Here's an example:"
 const scoreWrapper = document.getElementById('score-wrapper');
 const scoreDisplay = document.getElementById('score-display');
 
 /* Default score */
-let score = 0
+let score = 0;
+
+const inputExample = `
+Connections 
+Puzzle #274
+🟨🟨🟨🟨
+🟩🟩🟩🟩
+🟦🟦🟦🟦
+🟪🟪🟪🟪
+`;
 
 /* Templates to compare against user input and reference score values from */
 const template = {
@@ -44,7 +53,6 @@ form.addEventListener('submit', (e)=> {
     if (!resultsInput.value.trim()) {
         displayErrorMessage(errorMessage);
         form.reset();
-        input.focus();
     } else {
         processUserInput(resultsInput.value);
     }
@@ -60,7 +68,9 @@ resultsInput.addEventListener('focus', ()=> {
 function displayErrorMessage(message) {
     errorMessageWrapper.textContent = '';
     const messageEl = createDOMElement('p', 'error-message', message);
+    const inputExampleEl = createDOMElement('pre', '', inputExample);
     errorMessageWrapper.append(messageEl);
+    errorMessageWrapper.append(inputExampleEl)
     scoreWrapper.classList.add('d-none');
 }
 
@@ -97,8 +107,6 @@ function processUserInput(inputValue) {
         }
     } else {
         displayErrorMessage(errorMessage)
-        form.reset();
-        resultsInput.focus()
         return;
     }
 

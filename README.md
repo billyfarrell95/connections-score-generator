@@ -1,4 +1,4 @@
-# Score Generator Readme
+# Connections Game Score Generator
 
 ## How this score generator works
 
