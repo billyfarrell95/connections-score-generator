@@ -13,6 +13,12 @@ input[type=submit] {
     cursor: pointer;
 }
 
+pre {
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+}
+
 /********* Header *************/
 header {
     display: flex;
