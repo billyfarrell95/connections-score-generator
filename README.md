@@ -1,5 +1,7 @@
 # Connections Game Score Generator
 
+[View live site](https://connections-score-generator-bfarrell.netlify.app/)
+
 ## How this score generator works
 
 This score generator is based on the system defined in [this article](https://www.nytimes.com/2024/02/19/us/how-i-designed-my-perfect-connections-solve.html).
