@@ -1,5 +1,6 @@
 :root {
     --blue: #0A2463;
+    --blue-hover: #0A246310;
     --offwhite: #FFFAFF;
     --layout-gap: 2rem;
     --container-width: 1600px;
@@ -68,7 +69,12 @@ section {
 
 .container-inner {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+@media screen and (min-width: 650px) {
+    .container-inner {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 /*********  Buttons ******** */
@@ -95,16 +101,20 @@ button {
 .btn-secondary {
     background-color: transparent;
     color: var(--blue);
-    padding: .4rem .8rem .4rem .8rem;
-    font-size: 1rem;
+    padding: .4rem;
+    font-size: 0.7rem;
     border-radius: 5px;
-    border: 2px solid var(--blue);
-    font-weight: 600;
+    border: 1px solid var(--blue);
+    font-weight: 500;
 }
 
 .btn-secondary:hover {
-    background-color: var(--blue);
-    color: var(--offwhite)
+    background-color: var(--blue-hover);
+}
+
+.btn-secondary.active {
+    background-color: var(--blue-hover);
+    border: 2px solid var(--blue);
 }
 
 /********* Forms ******** */
@@ -139,13 +149,27 @@ textarea {
     padding-bottom: .6rem;
 }
 
+.buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.demo-toggle-btn {
+    font-size: 0.875rem;
+}
+
 /******** Score Area **********/
 
 .score-wrapper p {
-    font-size: 2.5rem;
     font-weight: bold;
     text-align: center;
     color: var(--blue)
+}
+
+.score-display {
+    font-size: 2.5rem;
 }
 
 /*********  Utilities ******** */

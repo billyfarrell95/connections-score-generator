@@ -29,10 +29,14 @@
                             <div><label for="results-input">Enter your game results</label></div>
                             <div><textarea name="results-input" cols="70" rows="10" id="results-input" placeholder='After playing click "View Results" and then "Share Your Results. Paste all that here."' required></textarea></div>
                         </div>
-                        <input type="submit" value="Calculate Score" class="btn-primary">
+                        <div class="buttons-wrapper">
+                            <input type="submit" value="Calculate Score" class="btn-primary">
+                            <button id="demo-toggle-btn" class="demo-toggle-btn btn-secondary" type="button">Toggle demo input</button>
+                        </div>
                     </form>
                     <div id="score-wrapper" class="score-wrapper d-none">
-                        <p>Score: <span id="score-display" class="score-display"></span></p>
+                        <p class="score-display">Score: <span id="score-display"></span></p>
+                        <p><a href="/info.html">See how this was calculated</a></p>
                     </div>
                 </div>
                 <div id="error-msg-wrapper"></div>

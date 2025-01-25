@@ -4,6 +4,7 @@ const errorMessageWrapper = document.getElementById('error-msg-wrapper');
 const errorMessage = "Invalid input. Please enter valid Connections Game results. Here's an example:"
 const scoreWrapper = document.getElementById('score-wrapper');
 const scoreDisplay = document.getElementById('score-display');
+const demoToggleButton = document.getElementById('demo-toggle-btn');
 
 /* Default score */
 let score = 0;
@@ -158,3 +159,13 @@ function calculateLineScore(lineColor, lineNumber) {
             return (colorTemplate.points * lineMultipliers.line4)
     }
 }
+
+demoToggleButton.addEventListener("click", () => {
+    if (demoToggleButton.classList.contains("active")) {
+        demoToggleButton.classList.remove("active")
+        form.reset();
+    } else {
+        resultsInput.value = inputExample;
+        demoToggleButton.classList.add("active");
+    }
+})
